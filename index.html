@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagar Public School - Download Admit Card</title>
+    <style>
+        /* General Styling */
+        body { background-color: #008000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        .header { background-color: #FFA500; padding: 20px; color: black; border-bottom: 2px solid #000; text-align: center; }
+        
+        /* Search Box Styling */
+        #search-container { background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 25px; border: 3px solid #777; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { font-weight: bold; display: block; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn-check { background-color: #4A90E2; color: white; border: none; padding: 12px; width: 100%; cursor: pointer; border-radius: 4px; font-size: 16px; font-weight: bold; }
+        .btn-check:hover { background-color: #357ABD; }
+
+        /* Admit Card Preview Styling */
+        #admit-card-modal { display: none; background: white; width: 100%; max-width: 750px; margin: 20px auto; padding: 20px; border: 1px solid #000; box-sizing: border-box; position: relative; }
+        
+        .school-header { display: flex; align-items: center; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        .logo { width: 80px; height: 80px; margin-right: 15px; }
+        .school-info { flex-grow: 1; text-align: center; }
+        .school-info h1 { margin: 0; font-size: 24px; color: #1a237e; }
+        .school-info p { margin: 2px 0; font-size: 14px; }
+
+        .exam-title { background-color: #ffff00; text-align: center; padding: 5px; margin: 10px 0; border: 1px solid #000; font-weight: bold; }
+
+        .student-details { display: flex; justify-content: space-between; margin-top: 10px; }
+        .info-table { width: 75%; border-collapse: collapse; }
+        .info-table td { padding: 5px; border: 1px solid #ddd; font-size: 14px; }
+        .label-text { color: red; font-weight: bold; width: 30%; }
+        
+        .photo-box { width: 110px; height: 130px; border: 1px solid #000; text-align: center; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .routine-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        .routine-table th, .routine-table td { border: 1px solid #000; padding: 6px; text-align: center; }
+        .routine-header { background-color: #ffff00; font-weight: bold; }
+
+        .footer-sign { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
+        .sign-box p { border-top: 1px solid #000; padding-top: 5px; width: 150px; font-size: 12px; }
+
+        .action-buttons { text-align: center; margin-top: 20px; }
+        .btn-print { background-color: #28a745; color: white; padding: 10px 25px; border: none; cursor: pointer; border-radius: 4px; margin-right: 10px; }
+        
+        /* Print Logic */
+        @media print {
+            body { background: white; }
+            .header, #search-container, .action-buttons, .dev-footer { display: none !important; }
+            #admit-card-modal { display: block !important; border: none; margin: 0; width: 100%; }
+        }
+
+        .dev-footer { background-color: #FFA500; padding: 8px; position: fixed; bottom: 0; width: 100%; text-align: center; font-size: 12px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>SAGAR PUBLIC SCHOOL</h1>
+    <p>Quazitola Chowk, Barsoi, Katihar - 855102</p>
+</div>
+
+<div id="search-container">
+    <h3 style="text-align:center; margin-top:0;">Admit Card Portal</h3>
+    <div class="form-group">
+        <label>Class:</label>
+        <select id="className">
+            <option value="1st">Class 1</option>
+            <option value="2nd">Class 2</option>
+            <option value="7th">Class 7</option>
+            <option value="10th">Class 10</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Roll Number:</label>
+        <input type="number" id="rollNo" placeholder="Enter Roll No. (e.g. 1001)">
+    </div>
+    <button class="btn-check" id="fetchBtn" onclick="searchStudent()">VIEW ADMIT CARD</button>
+</div>
+
+<div id="admit-card-modal">
+    <div class="school-header">
+        <img src="https://via.placeholder.com/80" class="logo" alt="Logo"> <div class="school-info">
+            <h1>SAGAR PUBLIC SCHOOL</h1>
+            <p>Quazitola Chowk, Barsoi, Katihar - 855102</p>
+            <p>Annual Examination 2026</p>
+        </div>
+    </div>
+
+    <div class="exam-title">ADMIT CARD</div>
+
+    <div class="student-details">
+        <table class="info-table">
+            <tr><td class="label-text">Student's Name :-</td><td id="sName"></td></tr>
+            <tr><td class="label-text">Father's Name :-</td><td id="fName"></td></tr>
+            <tr><td class="label-text">Class/Sec :-</td><td><span id="sClass"></span> / <span id="sSec">A</span></td></tr>
+            <tr><td class="label-text">Roll No :-</td><td id="sRoll"></td></tr>
+            <tr><td class="label-text">Reg ID :-</td><td id="sReg"></td></tr>
+        </table>
+        <div class="photo-box">
+            <img id="studentImg" src="" alt="Student Photo">
+        </div>
+    </div>
+
+    <div class="exam-title">☀️ Examination Routine ☀️</div>
+    <table class="routine-table">
+        <tr class="routine-header">
+            <td>Date</td><td>Day</td><td>Subject</td><td>Time</td>
+        </tr>
+        <tr><td>07/03/2026</td><td>Saturday</td><td>G.K</td><td>9:30 - 12:30</td></tr>
+        <tr><td>09/03/2026</td><td>Monday</td><td>Hindi</td><td>9:30 - 12:30</td></tr>
+        <tr><td>10/03/2026</td><td>Tuesday</td><td>Science</td><td>9:30 - 12:30</td></tr>
+        <tr><td>12/03/2026</td><td>Thursday</td><td>Maths</td><td>9:30 - 12:30</td></tr>
+        </table>
+
+    <div style="font-size: 11px; margin-top: 10px;">
+        <strong>Instructions:</strong> 1. Report before 9:20 AM. 2. Bring Admit Card & ID. 3. No cheating allowed.
+    </div>
+
+    <div class="footer-sign">
+        <div class="sign-box"><p>Director's Signature</p></div>
+        <div class="sign-box"><p>Principal's Signature</p></div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="btn-print" onclick="window.print()">PRINT / SAVE PDF</button>
+        <button onclick="location.reload()" style="padding: 10px;">BACK</button>
+    </div>
+</div>
+
+<div class="dev-footer">
+    Developed by: Riyaz Ahmad, PGT Zoology
+</div>
+
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxn49BtUy_tww506SvF6hjaNf9lRwyv69fpN1E4-cvVVYLjnzZSVN4Mv7fhr_AVEJL8CQ/exec"; // <--- APNA URL YAHAN DALEIN
+
+    function searchStudent() {
+        const cls = document.getElementById('className').value;
+        const roll = document.getElementById('rollNo').value;
+        const btn = document.getElementById('fetchBtn');
+
+        if(!roll) { alert("Please enter Roll No"); return; }
+
+        btn.innerText = "Searching...";
+        btn.disabled = true;
+
+        fetch(`${SCRIPT_URL}?class=${cls}&roll=${roll}`)
+        .then(response => response.json())
+        .then(data => {
+            btn.innerText = "VIEW ADMIT CARD";
+            btn.disabled = false;
+
+            if(data.status === "success") {
+                document.getElementById('sName').innerText = data.name;
+                document.getElementById('fName').innerText = data.father;
+                document.getElementById('sRoll').innerText = data.roll;
+                document.getElementById('sReg').innerText = data.regId;
+                document.getElementById('sClass').innerText = data.class;
+                document.getElementById('studentImg').src = data.photo || "https://via.placeholder.com/110x130?text=No+Photo";
+                
+                document.getElementById('search-container').style.display = 'none';
+                document.getElementById('admit-card-modal').style.display = 'block';
+            } else {
+                alert("Bacha nahi mila! Check Class and Roll No.");
+            }
+        })
+        .catch(err => {
+            alert("Error connecting to server!");
+            btn.innerText = "VIEW ADMIT CARD";
+            btn.disabled = false;
+        });
+    }
+</script>
+
+</body>
+</html>
