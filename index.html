@@ -169,7 +169,7 @@ body { background-color: #fff !important; }
 </div>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbw7Wss3jD4HFTBSuiJGtcGzYwGe5mEJnhWZpuQpDK4bohahl8lqluZ4wqTRpFCRqqZaHw/exec"; 
+    const API_URL = "https://script.google.com/macros/s/AKfycbxRa702OsUTZlVItKeAPkKRnv9Ffli1r3308rvQviAu6hvpQGx_6vWzMd6fE_iNvMcVjw/exec"; 
 
     function find() {
         var r = document.getElementById('roll').value;
@@ -185,7 +185,7 @@ body { background-color: #fff !important; }
                 if(res.status === "success") {
                     show(res.data);
                 } else {
-                    alert(res.message || "Data didn't match!");
+                    alert(res.message || "Data not found!");
                 }
             })
             .catch(e => {
@@ -201,18 +201,23 @@ body { background-color: #fff !important; }
         document.body.style.backgroundColor = "#fff"; 
         document.getElementById('output').style.display='block';
         
+        // Data Fill
+        document.getElementById('out-name').innerText = d.name;
+        document.getElementById('out-father').innerText = d.father;
         document.getElementById('out-class').innerText = d.classInput;
         document.getElementById('out-roll').innerText = d.rollNo;
         document.getElementById('out-reg').innerText = d.regNo;
-        document.getElementById('out-name').innerText = d.name;
-        document.getElementById('out-father').innerText = d.father;
         document.getElementById('out-center').innerText = d.center;
         document.getElementById('out-section').innerText = d.section || "-";
         document.getElementById('out-dob').innerText = d.dob || "-";
         document.getElementById('out-mother').innerText = d.mother || "-";
         
-        document.getElementById('out-photo').src = d.photo || "";
+        // PHOTO FIX: Direct source setting
+        if(d.photo) {
+            document.getElementById('out-photo').src = d.photo;
+        }
 
+        // Schedule Table
         let rows = "";
         if(d.schedule && d.schedule.length > 0) {
             d.schedule.forEach(s => {
