@@ -3,7 +3,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-/* ... (Aapka purana CSS as it is rahega) ... */
 body { font-family: 'Times New Roman', serif; background-color: #008000; margin: 0; padding-top: 100px; }
 .top-header { background-color: #FFA500; color: #000; text-align: center; padding: 15px; border-bottom: 3px solid #0056b3; }
 #search-box { max-width: 400px; margin: 30px auto; background: #C0C0C0; padding: 5px; border: 2px solid #333; text-align: center; }
@@ -12,23 +11,40 @@ body { font-family: 'Times New Roman', serif; background-color: #008000; margin:
 .input-row label { background: #E0E0E0; padding: 8px; width: 100px; text-align: left; border-right: 1px solid #333; font-weight: bold; }
 .input-row input { border: none; padding: 8px; flex: 1; outline: none; }
 .check-btn { background: #5D9CEC; color: white; border: 1px solid #fff; padding: 10px 25px; cursor: pointer; font-weight: bold; margin-top: 10px; border-radius: 4px; }
-.m-container { display: none; width: 800px; margin: 20px auto; background: #fff; box-sizing: border-box; padding: 30px; border: 1px solid #333; outline: 2px solid #333; outline-offset: -10px; }
+.m-container { 
+    display: none; 
+    width: 800px; 
+    margin: 20px auto; 
+    background: #fff; 
+    box-sizing: border-box; 
+    padding: 30px; 
+    border: 15px solid transparent;
+    border-image-source: url('https://www.transparenttextures.com/patterns/cubes.png'); 
+    border-image-slice: 30;
+    border-image-repeat: round;
+    outline: 2px solid #333; 
+    outline-offset: -10px;
+    box-shadow: 0 0 0 2px #333; 
+}
 .header-box { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px; }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.logo-img { width: 70px; margin-bottom: 5px; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed; }
 th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13px; }
 .yellow-bar { background: #FFEA00 !important; font-weight: bold; }
-.info-table { border: none; margin-bottom: 15px; width: 100%; }
-.info-table td { border: none; text-align: left; padding: 4px 0; font-size: 14px; }
-.label-cell { font-weight: bold; width: 130px; color: red; } 
+.info-table { border: none; margin-bottom: 15px; table-layout: auto !important; width: 100%; }
+.info-table td { border: none; text-align: left; padding: 5px 0; font-size: 14px; vertical-align: middle; }
+.label-cell { font-weight: bold; width: 130px; } 
+.value-cell { padding-left: 5px !important; } 
 .photo-wrap { width: 110px; height: 130px; border: 1px solid #000; background: #f0f0f0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.photo-img { max-width: 100%; max-height: 100%; object-fit: cover; }
+.photo-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.note-section { font-size: 11px; text-align: justify; margin-top: 15px; border-top: 1px solid #000; padding-top: 10px; }
 .footer-signs { margin-top: 40px; display: flex; justify-content: space-between; font-weight: bold; font-size: 12px; }
 .bottom-footer { background-color: #FFA500; color: #000; text-align: center; padding: 15px; font-size: 13px; margin-top: 50px; }
 
 @media print { 
-    body { background-color: #fff !important; padding-top: 0; }
-    .top-header, #search-box, .bottom-footer, .print-btn-div { display: none !important; } 
-    .m-container { display: block !important; width: 100% !important; margin: 0 !important; border: 1px solid #000 !important; }
+body { background-color: #fff !important; }
+.top-header, #search-box, .bottom-footer, .print-btn-div { display: none !important; } 
+.m-container { display: block !important; width: 100% !important; margin: 0 !important; border: 2px solid #000 !important; }
 }
 </style>
 </head>
@@ -51,26 +67,69 @@ th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13
 
 <div id="output" class="m-container">
     <div style="text-align: center; position: relative; padding-bottom: 5px; margin-bottom: 10px; border-bottom: 1px solid #000;">
-        <img src="https://drive.google.com/thumbnail?id=1pWEjzAU2G4AUC0RhIJ8cMHdLtLvQ4YJe&sz=w300" style="position: absolute; left: 0; top: 0; width: 90px;">
-        <h1 style="color: #3e7d58; font-size: 32px; font-weight: bold; margin: 0;">SAGAR PUBLIC SCHOOL</h1>
-        <div style="font-size: 11px; font-weight: bold;">QUAZITOLA, BARSOI, KATIHAR, BIHAR 855102</div>
-        <div style="background-color: #43515e; color: white; padding: 5px; font-size: 16px; font-weight: bold; margin-top: 10px;">ADMIT CARD - 2026</div>
+        <img src="https://drive.google.com/thumbnail?id=1pWEjzAU2G4AUC0RhIJ8cMHdLtLvQ4YJe&sz=w300" 
+             style="position: absolute; left: 0; top: 0; width: 95px; height: auto;">
+        
+        <h1 style="color: #3e7d58; font-size: 38px; font-weight: bold; margin: 0; font-family: Arial, sans-serif;">
+            SAGAR PUBLIC SCHOOL
+        </h1>
+        
+        <div style="color: #3e7d58; font-size: 13px; font-weight: bold; margin: 2px 0;">
+            EDUCATIONAL & WELFARE TRUST
+        </div>
+        <div style="font-size: 11px; font-weight: bold; line-height: 1.3; color: #000;">
+            QUAZITOLA, BARSOI, KATIHAR, BIHAR 855102<br>
+            RTE Registration no:- 21211472023218114225<br>
+            UDISE Code :- 10101122703<br>
+            <span style="color: blue; text-decoration: underline;">Email-sagarpublicschool2023@gmail.com</span>
+        </div>
+
+        <div style="background-color: #43515e; color: white; padding: 7px; font-size: 17px; font-weight: bold; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;">
+            Annual Examination - 2026
+        </div>
     </div>
+
 
     <table class="info-table">
         <tr>
-            <td class="label-cell">Student Name:</td><td id="out-name"></td>
-            <td rowspan="5" style="width: 130px; text-align: right;">
+            <td class="label-cell">Registration No:</td>
+            <td class="value-cell"><span id="out-reg"></span></td>
+            <td style="width:20px;"></td> <td class="label-cell">Roll No:</td>
+            <td class="value-cell"><span id="out-roll"></span></td>
+            <td rowspan="5" style="width: 130px; text-align: right; vertical-align: top; padding-left:10px;">
                 <div class="photo-wrap"><img id="out-photo" class="photo-img"></div>
             </td>
         </tr>
-        <tr><td class="label-cell">Father's Name:</td><td id="out-father"></td></tr>
-        <tr><td class="label-cell">Class / Roll:</td><td><b id="out-class"></b> / <b id="out-roll"></b></td></tr>
-        <tr><td class="label-cell">Registration No:</td><td id="out-reg"></td></tr>
-        <tr><td class="label-cell">Exam Centre:</td><td id="out-center"></td></tr>
+        <tr>
+            <td class="label-cell">Student Name:</td>
+            <td class="value-cell"><span id="out-name"></span></td>
+            <td></td>
+            <td class="label-cell">Class:</td>
+            <td class="value-cell"><b><span id="out-class"></span></b></td>
+        </tr>
+        <tr>
+            <td class="label-cell">Father's Name:</td>
+            <td class="value-cell"><span id="out-father"></span></td>
+            <td></td>
+            <td class="label-cell">Section:</td>
+            <td class="value-cell"><span id="out-section"></span></td>
+        </tr>
+        <tr>
+            <td class="label-cell">Mother's Name:</td>
+            <td class="value-cell"><span id="out-mother"></span></td>
+            <td></td>
+            <td class="label-cell">Date of Birth:</td>
+            <td class="value-cell"><span id="out-dob"></span></td>
+        </tr>
+        <tr>
+            <td class="label-cell">Exam Centre:</td>
+            <td colspan="4" class="value-cell"><span id="out-center"></span></td>
+        </tr>
     </table>
 
-    <h3 style="text-align:center; background:#ffff00; padding:5px; border:1px solid #000; margin:10px 0;">☀️ Examination Routine ☀️</h3>
+    <div style="text-align:center; background:#ffff00; padding:5px; border:1px solid #000; font-weight:bold; margin-top:10px;">
+       ☀️ Examination Routine ☀️
+    </div>
     <table>
         <thead>
             <tr class="yellow-bar">
@@ -83,14 +142,24 @@ th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13
         <tbody id="schedule-body"></tbody>
     </table>
 
+    <div class="note-section">
+        <b>Instructions :-</b><br>
+        1. Student must report before 9.20am.<br>
+        2. Student should bring their Admit Card & Id Card.<br>
+        3. Student must sit according to the seating plan and must not exchange any material.<br>
+        4. Admit card and other formalities will be check by the invigilator before the exam start.<br>
+        5. Any form of cheating or malpractice will result in cancellation of the paper.<br>
+        6. Students must submit the answer sheets properly with name, roll no and id no filled.
+    </div>
+
     <div class="footer-signs">
-        <span><br>Director's Signature</span>
-        <span><br>Class Teacher</span>
-        <span><br>Principal's Signature</span>
+        <div style="text-align:center;"><img src="https://drive.google.com/thumbnail?id=123-DIRECTOR-SIGN-ID" style="height:40px; display:block; margin:auto;"><br>Director's Signature</div>
+        <div style="text-align:center;"><br><br>Class Teacher</div>
+        <div style="text-align:center;"><img src="https://drive.google.com/thumbnail?id=123-PRINCIPAL-SIGN-ID" style="height:40px; display:block; margin:auto;"><br>Principal's Signature</div>
     </div>
 
     <div style="margin-top:30px; text-align:center;" class="print-btn-div">
-        <button onclick="window.print()" style="padding:12px 30px; background:#008000; color:white; border:none; cursor:pointer; font-weight:bold; border-radius:5px;">PRINT / SAVE PDF</button>
+        <button onclick="if(window.AndroidPrint){ AndroidPrint.triggerPrint(); } else { window.print(); }" style="padding:12px 30px; background:#008000; color:white; border:none; cursor:pointer; font-weight:bold; border-radius:5px;">PRINT / SAVE PDF</button>
         <button onclick="location.reload()" style="padding:10px 20px; background:#666; color:white; border:none; margin-left:10px; cursor:pointer; border-radius:4px;">BACK</button>
     </div>
 </div>
@@ -100,7 +169,6 @@ th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13
 </div>
 
 <script>
-    // Paste your Google Apps Script Web App URL here
     const API_URL = "https://script.google.com/macros/s/AKfycbw7Wss3jD4HFTBSuiJGtcGzYwGe5mEJnhWZpuQpDK4bohahl8lqluZ4wqTRpFCRqqZaHw/exec"; 
 
     function find() {
@@ -114,7 +182,6 @@ th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13
             .then(res => res.json())
             .then(res => {
                 document.querySelector('.check-btn').innerText = "Check Admit Card";
-                // res.status Success check
                 if(res.status === "success") {
                     show(res.data);
                 } else {
@@ -122,7 +189,7 @@ th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13
                 }
             })
             .catch(e => {
-                alert("Error connecting to server!");
+                alert("Error connecting!");
                 document.querySelector('.check-btn').innerText = "Check Admit Card";
             });
     }
@@ -134,15 +201,18 @@ th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13
         document.body.style.backgroundColor = "#fff"; 
         document.getElementById('output').style.display='block';
         
-        document.getElementById('out-name').innerText = d.name;
-        document.getElementById('out-father').innerText = d.father;
-        document.getElementById('out-class').innerText = d.classInput; // User typed class
+        document.getElementById('out-class').innerText = d.classInput;
         document.getElementById('out-roll').innerText = d.rollNo;
         document.getElementById('out-reg').innerText = d.regNo;
+        document.getElementById('out-name').innerText = d.name;
+        document.getElementById('out-father').innerText = d.father;
         document.getElementById('out-center').innerText = d.center;
-        document.getElementById('out-photo').src = d.photo || "https://via.placeholder.com/110x130?text=No+Photo";
+        document.getElementById('out-section').innerText = d.section || "-";
+        document.getElementById('out-dob').innerText = d.dob || "-";
+        document.getElementById('out-mother').innerText = d.mother || "-";
+        
+        document.getElementById('out-photo').src = d.photo || "";
 
-        // Dynamic Schedule Body
         let rows = "";
         if(d.schedule && d.schedule.length > 0) {
             d.schedule.forEach(s => {
@@ -154,7 +224,7 @@ th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13
                 </tr>`;
             });
         } else {
-            rows = "<tr><td colspan='4'>No schedule found for this class</td></tr>";
+            rows = "<tr><td colspan='4'>No schedule found</td></tr>";
         }
         document.getElementById('schedule-body').innerHTML = rows;
     }
