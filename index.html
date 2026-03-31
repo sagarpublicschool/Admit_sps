@@ -219,35 +219,33 @@ body { background-color: #fff !important; }
 
         // Schedule Table
         let rows = "";
-    if(d.schedule && d.schedule.length > 0) {
-        d.schedule.forEach(s => {
-            // DATE FIX: Yahan hum ajeeb date ko sahi format mein badal rahe hain
-            let displayDate = s.date; 
-            
-            try {
-                // Agar date ISO format (2026-06-02T18:30...) mein hai
-                if (s.date.includes('T')) {
-                    let dateObj = new Date(s.date);
-                    let day = String(dateObj.getDate()).padStart(2, '0');
-                    let month = String(dateObj.getMonth() + 1).padStart(2, '0');
-                    let year = dateObj.getFullYear();
-                    displayDate = `${day}/${month}/${year}`;
-                }
-            } catch (e) {
-                displayDate = s.date; // Agar error aaye toh purana hi dikhaye
-            }
+if(d.schedule && d.schedule.length > 0) {
+    d.schedule.forEach(s => {
+        // Hum yahan koi conversion nahi kar rahe
+        // Jo sheet se aa raha hai (s.date), wahi dikhayenge
+        let rawDate = s.date; 
 
-            rows += `<tr>
-                <td>${displayDate}</td> 
-                <td>${s.day}</td>
-                <td>${s.subject}</td>
-                <td>${s.time}</td>
-            </tr>`;
-        });
-    } else {
-        rows = "<tr><td colspan='4'>No schedule found</td></tr>";
-    }
-    document.getElementById('schedule-body').innerHTML = rows;
+        // Agar date ISO format mein aa rahi hai (T ke saath) 
+        // toh sirf shuruat ke 10 characters (YYYY-MM-DD) le rahe hain
+        if (rawDate && rawDate.includes('T')) {
+            rawDate = rawDate.split('T')[0]; 
+            
+            // Isko DD-MM-YYYY banane ke liye:
+            let parts = rawDate.split('-');
+            rawDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+
+        rows += `<tr>
+            <td>${rawDate}</td> 
+            <td>${s.day}</td>
+            <td>${s.subject}</td>
+            <td>${s.time}</td>
+        </tr>`;
+    });
+} else {
+    rows = "<tr><td colspan='4'>No schedule found</td></tr>";
+}
+document.getElementById('schedule-body').innerHTML = rows;
 }
 </script>
 </body>
