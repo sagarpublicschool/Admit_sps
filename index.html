@@ -154,7 +154,7 @@ body { background-color: #fff !important; }
 
     <div class="footer-signs">
         <div style="text-align:center;"><img src="https://drive.google.com/thumbnail?id=123-DIRECTOR-SIGN-ID" style="height:40px; display:block; margin:auto;"><br>Director's Signature</div>
-        <div style="text-align:center;"><br><br>Class Teacher</div>
+        <div style="text-align:center;"><br><br>   </div>
         <div style="text-align:center;"><img src="https://drive.google.com/thumbnail?id=123-PRINCIPAL-SIGN-ID" style="height:40px; display:block; margin:auto;"><br>Principal's Signature</div>
     </div>
 
@@ -219,20 +219,36 @@ body { background-color: #fff !important; }
 
         // Schedule Table
         let rows = "";
-        if(d.schedule && d.schedule.length > 0) {
-            d.schedule.forEach(s => {
-                rows += `<tr>
-                    <td>${s.date}</td>
-                    <td>${s.day}</td>
-                    <td>${s.subject}</td>
-                    <td>${s.time}</td>
-                </tr>`;
-            });
-        } else {
-            rows = "<tr><td colspan='4'>No schedule found</td></tr>";
-        }
-        document.getElementById('schedule-body').innerHTML = rows;
+    if(d.schedule && d.schedule.length > 0) {
+        d.schedule.forEach(s => {
+            // DATE FIX: Yahan hum ajeeb date ko sahi format mein badal rahe hain
+            let displayDate = s.date; 
+            
+            try {
+                // Agar date ISO format (2026-06-02T18:30...) mein hai
+                if (s.date.includes('T')) {
+                    let dateObj = new Date(s.date);
+                    let day = String(dateObj.getDate()).padStart(2, '0');
+                    let month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    let year = dateObj.getFullYear();
+                    displayDate = `${day}/${month}/${year}`;
+                }
+            } catch (e) {
+                displayDate = s.date; // Agar error aaye toh purana hi dikhaye
+            }
+
+            rows += `<tr>
+                <td>${displayDate}</td> 
+                <td>${s.day}</td>
+                <td>${s.subject}</td>
+                <td>${s.time}</td>
+            </tr>`;
+        });
+    } else {
+        rows = "<tr><td colspan='4'>No schedule found</td></tr>";
     }
+    document.getElementById('schedule-body').innerHTML = rows;
+}
 </script>
 </body>
 </html>
